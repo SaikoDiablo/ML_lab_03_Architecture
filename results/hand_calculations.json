@@ -1,0 +1,7 @@
+{
+    "MLP first Linear layer": 401408,
+    "CNN first Conv2d layer": 225792,
+    "Attention QKV projections": 393216,
+    "Attention score products": 32768,
+    "Attention weighted-value products": 32768
+}
