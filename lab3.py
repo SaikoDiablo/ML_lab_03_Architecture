@@ -12,9 +12,11 @@ import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 import thop
+import sys
 
 from torch.utils.data import DataLoader, random_split
 from torchinfo import summary
+sys.stdout.reconfigure(encoding='utf-8')
 
 # Experiment settings
 SEED = 42
@@ -306,9 +308,6 @@ def profile_model(model, inputs):
                 inputs=(inputs,),
                 verbose=False
             )
-
-        # THOP generally reports MACs not universally comparable
-        # hardware FLOP
         return {
             "macs": float(macs),
             "estimated_flops_2_per_mac": float(2 * macs),
@@ -353,7 +352,7 @@ def measure_latency(model, batch_size, runs):
         batch_size, 1, 28, 28, device=device
     )
 
-    # Warm-up runs are excluded from measurements
+    # Warm-up runs 
     with torch.inference_mode():
         for _ in range(10):
             model(inputs)
@@ -375,7 +374,6 @@ def measure_latency(model, batch_size, runs):
 
 
 for name, model in models.items():
-    # Manual specifies 100 runs for batch 1 and 20 for batch 128
     lat_1 = measure_latency(model, batch_size=1, runs=100)
     lat_128 = measure_latency(model, batch_size=128, runs=20)
 
@@ -482,7 +480,7 @@ def train_model(model, name):
             f"Val acc: {val_accuracy:.2f}%"
         )
 
-    # Evaluating the official test set after training
+    # Evaluating the official test set after train
     test_accuracy, test_loss = evaluate_model(
         model, test_loader, criterion
     )
