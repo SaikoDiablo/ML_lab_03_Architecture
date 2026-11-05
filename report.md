@@ -23,7 +23,7 @@ Counted parameters with `torchinfo.summary`, hand-calculated FLOPs for one layer
 | CNN | 20,490 | 0.08 |
 | Attention | 70,794 | 0.15 |
 
-Only the CNN is close to the manual's 100k–150k target — the MLP overshoots and Attention undershoots. Reporting as measured.
+Only the CNN is close to the manual's 100k–150k target  the MLP overshoots and Attention undershoots. Reporting as measured.
 
 **Hand FLOPs vs THOP**
 
